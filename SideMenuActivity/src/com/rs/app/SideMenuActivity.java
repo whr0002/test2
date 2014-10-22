@@ -1,6 +1,5 @@
 package com.rs.app;
 
-import io.vov.vitamio.utils.Log;
 
 import java.util.ArrayList;
 
@@ -174,7 +173,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 
 		items.add(new EntryItem("Share", "Share our app",
 				R.drawable.ic_action_social_share));
-		items.add(new EntryItem("Rate Dota2TV", "Like it?",
+		items.add(new EntryItem("Rate", "Like it?",
 				R.drawable.ic_action_rating_good));
 
 		eAdapter = new EntryAdapter(this, items);

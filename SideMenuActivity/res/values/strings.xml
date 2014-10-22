@@ -18,7 +18,7 @@
     <string name="loading">Loading...</string>
     <string name="albumtitle">some title</string>
     <string name="numberofvideos">50 videos</string>
-    <string name="network">Server is busy or network connection is lost,\nplease try again later.</string>
+    <string name="network">Unable to get data, please try again later.</string>
     <string name="retry">Retry</string>
     <string name="teamName">Team</string>
     <string name="iconDesc">ICON</string>
