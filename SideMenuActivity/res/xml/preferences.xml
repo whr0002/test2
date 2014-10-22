@@ -3,30 +3,16 @@
 
     <PreferenceCategory android:title="Settings" >
         
-        <ListPreference
-            android:title="Choose a default video player"
-            android:key="preferredPlayer"
-            android:defaultValue="-1"
-            android:entries="@array/listPlayerStrings"
-            android:entryValues="@array/listPlayerValues" />
-        
-        <ListPreference
-            android:title="Choose a default video quality"
-            android:key="preferredQuality"
-            android:defaultValue="none"
-            android:entries="@array/listQualityStrings"
-            android:entryValues="@array/listQualityValues" />
-    	
 
     </PreferenceCategory>
     
     <PreferenceCategory android:title="@string/about_preferences" >
         <PreferenceScreen
-            android:summary="Help us make Dota2TV better"
+            android:summary="Help us make Workout Day better"
             android:title="Feedback" >
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="mailto:dota2tv1@gmail.com?subject=Dota2TV Feedback" >
+                android:data="mailto:workoutmaster2014@gmail.com?subject=Workout Day Feedback" >
                 <extra
                     android:name="android.intent.extra.TEXT"
                     android:value="" />
@@ -41,14 +27,6 @@
             android:summary=""
             android:title="Disclaimer" />
         
-        <PreferenceScreen
-            android:summary="whr0002@gmail.com"
-            android:title="Donate" >
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=BL54X4X73UMS2&amp;lc=CA&amp;item_name=Dota2TV%20%2d%20WWYZ&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted">
-            </intent>
-        </PreferenceScreen>
     </PreferenceCategory>
 
 </PreferenceScreen>

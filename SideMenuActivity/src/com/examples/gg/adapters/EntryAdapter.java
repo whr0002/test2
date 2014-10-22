@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.examples.gg.data.EntryItem;
@@ -59,18 +60,34 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 
 				if (title != null)
 					title.setText(ei.title);
-				if (subtitle != null)
+				if (subtitle != null){
 					subtitle.setText(ei.subtitle);
+				}else{
+					
+				}
 				if (icon != null)
 					icon.setImageResource(ei.icon);
 				if (header != null)
 					header.setImageResource(color.transparent);
 
+				if (ei.subtitle == null) {
+					// In workout section
+					// No subtitles
+					subtitle.setVisibility(View.GONE);
+
+					// Center the title
+					RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) title
+							.getLayoutParams();
+					layoutParams.addRule(RelativeLayout.CENTER_VERTICAL,
+							RelativeLayout.TRUE);
+					title.setLayoutParams(layoutParams);
+
+				}
 				if (ei.isChecked()) {
 
 					v.setBackgroundResource(R.color.lightGrey);
 					header.setImageResource(R.color.popularbluegreen);
-					
+
 				}
 			}
 		}

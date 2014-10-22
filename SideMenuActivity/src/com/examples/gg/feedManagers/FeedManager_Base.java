@@ -67,7 +67,7 @@ public class FeedManager_Base {
 						.getString("viewCount") + " views";
 				String inSecs = oneVideo.getJSONObject("media$group")
 						.getJSONObject("yt$duration").getString("seconds");
-				String convertedDuration = formatSecondsAsTime(inSecs) + " HD";
+				String convertedDuration = formatSecondsAsTime(inSecs);
 
 				updateTime = handleDate(updateTime);
 

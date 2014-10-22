@@ -168,7 +168,7 @@ public class LoadMore_Base extends SherlockFragment implements
 
 			mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
-			final String[] catagory = { "General", "Channels" };
+			final String[] catagory = { "Recent", "Channels" };
 
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 					mActionBar.getThemedContext(),

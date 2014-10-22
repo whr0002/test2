@@ -1,13 +1,17 @@
 package com.rs.app;
 
+import io.vov.vitamio.utils.Log;
+
 import java.util.ArrayList;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -47,6 +51,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 	EntryAdapter eAdapter;
 
 	private FragmentManager fm;
+	private final String firstTimePrefs = "firsttime";
 //	private InterstitialAd interstitial;
 
 	// private boolean doubleBackToExitPressedOnce = false;
@@ -97,52 +102,52 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 				R.drawable.ic_action_news));
 
 		items.add(new SectionItem("Let's do it"));
-		items.add(new EntryItem("7-minute workout", "Science? Yes.",
+		items.add(new EntryItem("7-minute workout", "Train efficiently",
 				R.drawable.highlights));
 		
 		items.add(new SectionItem("Workout Videos"));
-		items.add(new EntryItem("General", "Latest videos",
+		items.add(new EntryItem("General", null,
 				R.drawable.highlights));
-		items.add(new EntryItem("Abs", "¨I(¨‰£Þ¨‰)¨J",
+		items.add(new EntryItem("Abs", null,
 				R.drawable.highlights));
-		items.add(new EntryItem("Arms", "©µ(£þ¨Œ £þ)©± ",
+		items.add(new EntryItem("Arms", null,
 				R.drawable.highlights));
-		items.add(new EntryItem("Back", "¨ß(¨‰,¨‰)¨Ï",
+		items.add(new EntryItem("Back", null,
 				R.drawable.highlights));
-		items.add(new EntryItem("Butt", "\\(¨‰¨Œ¨‰)/",
-				R.drawable.highlights));
-		
-		items.add(new EntryItem("Fat Burning", "¨I(¨‰¨Œ¨‰)¨J",
+		items.add(new EntryItem("Butt", null,
 				R.drawable.highlights));
 		
-		items.add(new EntryItem("Full Body", "¨ß(¨‰¨Œ¨‰)¨Ï",
+		items.add(new EntryItem("Fat Burning", null,
 				R.drawable.highlights));
 		
-		items.add(new EntryItem("Jump Rope", "¨ß(¨‰£Þ¨‰¨ß)",
+		items.add(new EntryItem("Full Body", null,
 				R.drawable.highlights));
 		
-		items.add(new EntryItem("Legs", "(¨s¨‰£Þ¨‰)¨s",
+		items.add(new EntryItem("Jump Rope", null,
 				R.drawable.highlights));
 		
-		items.add(new EntryItem("Strength", "\\(£þ¦á£þ)>",
+		items.add(new EntryItem("Legs", null,
 				R.drawable.highlights));
 		
-		items.add(new EntryItem("Stretches", "<(£þ¦á£þ)/",
+		items.add(new EntryItem("Strength", null,
 				R.drawable.highlights));
 		
-		items.add(new EntryItem("Thigh", "<(£þ¦á£þ)>",
+		items.add(new EntryItem("Stretches", null,
 				R.drawable.highlights));
 		
-		items.add(new EntryItem("Upper Body", "~(£þ¨Œ£þ)~",
+		items.add(new EntryItem("Thigh", null,
 				R.drawable.highlights));
 		
-		items.add(new EntryItem("Walking", "(~£þ¨Œ£þ)~",
+		items.add(new EntryItem("Upper Body", null,
 				R.drawable.highlights));
 		
-		items.add(new EntryItem("Weight Loss", "¨ß(¨‰¨Œ¨‰¨ß) (¨s¨‰¨Œ¨‰)¨s",
+		items.add(new EntryItem("Walking", null,
 				R.drawable.highlights));
 		
-		items.add(new EntryItem("Yoga", "<(£þ¦á£þ)> <(£þ¦á£þ)><(£þ¦á£þ)>",
+		items.add(new EntryItem("Weight Loss", null,
+				R.drawable.highlights));
+		
+		items.add(new EntryItem("Yoga", null,
 				R.drawable.highlights));
 		
 //		items.add(new EntryItem("Matches", "You don't wanna miss it",
@@ -210,11 +215,29 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 
 		if (savedInstanceState == null) {
 			selectItem(1);
-
+					
 		}
-		
+		isFirstTimeUser();
 		this.validatingTips(this);
 
+	}
+	private void isFirstTimeUser(){
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		String result = prefs.getString(firstTimePrefs, "");
+		if(result.equals("")){
+			// This is first time to start the activity
+			// Open drawer for the user
+			Handler handler = new Handler();
+			handler.postDelayed(new Runnable() {
+				public void run() {
+					mDrawerLayout.openDrawer(mDrawerList);
+				}
+			}, 0);
+			
+			// Save the state
+			prefs.edit().putString(firstTimePrefs, "No").commit();
+		}
+		
 	}
 
 	private void validatingTips(SherlockFragmentActivity sfa) {
@@ -400,7 +423,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 
 			Intent email = new Intent(Intent.ACTION_VIEW);
 			email.setData(Uri
-					.parse("mailto:dota2tv1@gmail.com?subject=Dota2TV Feedback"));
+					.parse("mailto:workoutmaster2014@gmail.com?subject=Workout Day Feedback"));
 			startActivity(Intent.createChooser(email, "Send feedback via.."));
 			// startActivity(email);
 			break;
@@ -411,10 +434,10 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 			sendIntent.setAction(Intent.ACTION_SEND);
 			sendIntent
 					.putExtra(Intent.EXTRA_TEXT,
-							"https://play.google.com/store/apps/details?id=com.examples.gg");
+							"https://play.google.com/store/apps/details?id=");
 			sendIntent.setType("text/plain");
 			startActivity(Intent
-					.createChooser(sendIntent, "Share Dota2TV to.."));
+					.createChooser(sendIntent, "Share Workout Day to.."));
 			// startActivity(sendIntent);
 			break;
 
@@ -429,7 +452,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 				// open a webbrowser
 				rateIntent
 						.setData(Uri
-								.parse("https://play.google.com/store/apps/details?id=com.examples.gg"));
+								.parse("https://play.google.com/store/apps/details?id="));
 				if (tryStartActivity(rateIntent) == false) {
 					// Well if this also fails, we have run out of options,
 					// inform the user.

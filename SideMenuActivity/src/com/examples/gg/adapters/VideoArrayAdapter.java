@@ -163,13 +163,12 @@ public class VideoArrayAdapter extends ArrayAdapter<String> {
 		holder.authorView.setText(videos.get(position).getAuthor());
 
 		// values for time and view counts should not be null
-		if (videos.get(position).getUpdateTime() != null
-				&& videos.get(position).getViewCount() != null) {
+		if (videos.get(position).isVideo) {
 
 			// For Youtube videos, showing update date and views
-			holder.countView.setText(videos.get(position).getUpdateTime()
+			holder.countView.setText(" | " + videos.get(position).getUpdateTime()
 					+ " | " + videos.get(position).getViewCount());
-		} else if (videos.get(position).getViewCount() != null) {
+		} else if (videos.get(position).isTwitch) {
 
 			// For Twitch, only showing number of viewers
 			holder.watchingIcon = (ImageView) convertView
@@ -177,6 +176,10 @@ public class VideoArrayAdapter extends ArrayAdapter<String> {
 			holder.watchingIcon.setVisibility(View.VISIBLE);
 			holder.countView.setText(videos.get(position).getViewCount());
 
+		} else if (videos.get(position).isNews) {
+			// For News
+			holder.countView.setText(null);
+			holder.authorView.setMaxLines(3);
 		} else {
 			holder.countView.setText(null);
 		}
