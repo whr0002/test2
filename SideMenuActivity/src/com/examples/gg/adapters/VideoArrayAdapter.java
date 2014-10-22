@@ -121,6 +121,7 @@ public class VideoArrayAdapter extends ArrayAdapter<String> {
 				.showImageOnLoading(R.drawable.imageholder3)
 				.showImageForEmptyUri(R.drawable.imageholder3)
 				.showImageOnFail(R.drawable.imageholder3).cacheInMemory(true)
+				.delayBeforeLoading(300)
 				.cacheOnDisk(true).resetViewBeforeLoading(false)
 				.considerExifParams(true).bitmapConfig(Bitmap.Config.RGB_565)
 				.build();

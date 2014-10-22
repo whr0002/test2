@@ -16,31 +16,25 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.app.SherlockListActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.costum.android.widget.LoadMoreListView;
-import com.costum.android.widget.LoadMoreListView.OnLoadMoreListener;
 import com.examples.gg.adapters.EndlessScrollListener;
 import com.examples.gg.adapters.VideoArrayAdapter;
 import com.examples.gg.data.MyAsyncTask;
 import com.examples.gg.data.Video;
 import com.examples.gg.feedManagers.FeedManager_Base;
-import com.google.ads.AdView;
-import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.rs.app.R;
 
 public class LoadMore_Activity_Base extends SherlockActivity {
@@ -80,7 +74,7 @@ public class LoadMore_Activity_Base extends SherlockActivity {
 	protected String thumbnailUrl;
 	protected int section = 0;
 	private DisplayImageOptions options;
-	protected AdView adView;
+//	protected AdView adView;
 	protected boolean hasHeader = true;
 	protected GridView gv;
 	protected Activity sfa;
@@ -95,7 +89,7 @@ public class LoadMore_Activity_Base extends SherlockActivity {
 		sfa = this;
 		// Get loading view
 		fullscreenLoadingView = findViewById(R.id.fullscreen_loading_indicator);
-		adView = (AdView) findViewById(R.id.ad);
+//		adView = (AdView) findViewById(R.id.ad);
 		// default no filter for videos
 
 		Intent intent = getIntent();
@@ -212,7 +206,10 @@ public class LoadMore_Activity_Base extends SherlockActivity {
 		// channelName.setText(title);
 		//
 		// }
-
+		boolean pauseOnScroll = false; // or true
+		boolean pauseOnFling = true; // or false
+		PauseOnScrollListener listener = new PauseOnScrollListener(imageLoader, pauseOnScroll, pauseOnFling);
+		gv.setOnScrollListener(listener);
 		vaa = new VideoArrayAdapter(this, titles, videolist, imageLoader);
 		// setListAdapter(vaa);
 		gv.setAdapter(vaa);
@@ -415,9 +412,9 @@ public class LoadMore_Activity_Base extends SherlockActivity {
 		super.onDestroy();
 
 		// Destroy ads when the view is destroyed
-		if (adView != null) {
-			adView.destroy();
-		}
+//		if (adView != null) {
+//			adView.destroy();
+//		}
 
 		// Log.d("UniversalImageLoader", "It's task root!");
 		imageLoader.clearDiscCache();

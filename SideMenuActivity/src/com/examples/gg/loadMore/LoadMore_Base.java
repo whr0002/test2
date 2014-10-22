@@ -38,8 +38,8 @@ import com.examples.gg.adapters.VideoArrayAdapter;
 import com.examples.gg.data.MyAsyncTask;
 import com.examples.gg.data.Video;
 import com.examples.gg.feedManagers.FeedManager_Base;
-import com.google.ads.AdView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.rs.app.R;
 
 public class LoadMore_Base extends SherlockFragment implements
@@ -75,7 +75,7 @@ public class LoadMore_Base extends SherlockFragment implements
 	protected ActionBar mActionBar;
 	protected boolean firstTime = true;
 	protected int currentPosition = 0;
-	protected AdView adView;
+//	protected AdView adView;
 	protected GridView gv;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,7 +89,7 @@ public class LoadMore_Base extends SherlockFragment implements
 				.findViewById(R.id.fullscreen_loading_indicator);
 
 		// Get ads view
-		adView = (AdView) sfa.findViewById(R.id.ad);
+//		adView = (AdView) sfa.findViewById(R.id.ad);
 
 		// default no filter for videos
 		needFilter = false;
@@ -207,7 +207,10 @@ public class LoadMore_Base extends SherlockFragment implements
 //		myLoadMoreListView.setDivider(null);
 		
 		//setBannerInHeader();
-
+		boolean pauseOnScroll = false; // or true
+		boolean pauseOnFling = true; // or false
+		PauseOnScrollListener listener = new PauseOnScrollListener(imageLoader, pauseOnScroll, pauseOnFling);
+		gv.setOnScrollListener(listener);
 		vaa = new VideoArrayAdapter(sfa, titles, videolist, imageLoader);
 		gv.setAdapter(vaa);
 
@@ -449,11 +452,11 @@ public class LoadMore_Base extends SherlockFragment implements
 		super.onDestroy();
 
 		// Destroy ads when the view is destroyed
-		if (adView != null) {
-			adView.destroy();
-		}
+//		if (adView != null) {
+//			adView.destroy();
+//		}
 		// Log.d("UniversalImageLoader", "cleared!");
-		imageLoader.clearDiscCache();
+//		imageLoader.clearDiscCache();
 		imageLoader.clearMemoryCache();
 
 		// check the state of the task
