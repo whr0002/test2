@@ -1,6 +1,5 @@
 package com.examples.gg.loadMore;
 
-import io.vov.vitamio.utils.Log;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;

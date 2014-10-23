@@ -1,6 +1,5 @@
 package com.examples.gg.loadMore;
 
-import io.vov.vitamio.utils.Log;
 import java.util.ArrayList;
 import java.util.List;
 import android.annotation.SuppressLint;
