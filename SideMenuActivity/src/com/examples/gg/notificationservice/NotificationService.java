@@ -34,7 +34,7 @@ public class NotificationService extends WakefulIntentService {
 				new Intent(this, SideMenuActivity.class), 0);
 
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-				this).setSmallIcon(R.drawable.ic_launcher)
+				this).setSmallIcon(R.drawable.ic_launcher_o)
 				.setContentTitle("The game has started!")
 				.setContentText(intent.getStringExtra("msg"))
 				.setContentIntent(contentIntent)

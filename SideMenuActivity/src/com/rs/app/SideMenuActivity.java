@@ -116,6 +116,9 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 		items.add(new EntryItem("Butt", null,
 				R.drawable.highlights));
 		
+		items.add(new EntryItem("Cardio", null,
+				R.drawable.highlights));
+		
 		items.add(new EntryItem("Fat Burning", null,
 				R.drawable.highlights));
 		
@@ -329,7 +332,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 
 		case 2:
 			// Gosu news
-			ft.replace(R.id.content_frame, new LoadMore_WorkoutNews("http://www.ctvnews.ca/health/diet-and-nutrition",0));
+			ft.replace(R.id.content_frame, new LoadMore_WorkoutNews("http://www.ctvnews.ca/health/health-headlines",0));
 			break;
 
 		// Section divider case 3------------------------
@@ -364,60 +367,64 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 			break;
 			
 		case 11:
-			ft.replace(R.id.content_frame, new SearchResultFragment("workout fat burning","Fat Burning"));
+			ft.replace(R.id.content_frame, new SearchResultFragment("workout cardio","Cardio"));
 			break;
 			
 		case 12:
-			ft.replace(R.id.content_frame, new SearchResultFragment("workout full body","Full Body"));
+			ft.replace(R.id.content_frame, new SearchResultFragment("workout fat burning","Fat Burning"));
 			break;
 			
 		case 13:
-			ft.replace(R.id.content_frame, new SearchResultFragment("workout jump rope","Jump Rope"));
+			ft.replace(R.id.content_frame, new SearchResultFragment("workout full body","Full Body"));
 			break;
 			
 		case 14:
+			ft.replace(R.id.content_frame, new SearchResultFragment("workout jump rope","Jump Rope"));
+			break;
+			
+		case 15:
 			ft.replace(R.id.content_frame, new SearchResultFragment("workout legs","Legs"));
 			break;
 
-		case 15:
+		case 16:
 			ft.replace(R.id.content_frame, new SearchResultFragment("workout strength","Strength"));
 			break;
 			
-		case 16:
+		case 17:
 			ft.replace(R.id.content_frame, new SearchResultFragment("workout stretches","Stretches"));
 			break;
 			
-		case 17:
+		case 18:
 			ft.replace(R.id.content_frame, new SearchResultFragment("workout thigh","Thigh"));
 			break;
 			
-		case 18:
+		case 19:
 			ft.replace(R.id.content_frame, new SearchResultFragment("workout upper body","Upper Body"));
 			break;
 			
-		case 19:
+		case 20:
 			ft.replace(R.id.content_frame, new SearchResultFragment("workout walking","Walking"));
 			break;
 			
-		case 20:
+		case 21:
 			ft.replace(R.id.content_frame, new SearchResultFragment("workout weight loss","Weight Loss"));
 			break;
 			
-		case 21:
+		case 22:
 			ft.replace(R.id.content_frame, new SearchResultFragment("workout yoga","Yoga"));
 			break;
 			
-		// Section divider case 22------------------------
-		case 23:
+		// Section divider case 23------------------------
+		case 24:
 			ft.replace(R.id.content_frame, new FavoritesFragment());
 			break;
 			
-		case 24:
+		case 25:
 			ft.replace(R.id.content_frame, new TipsFragment());
 			break;
 			
 		// Section divider case 25------------------------
-		case 26:
+		case 27:
 			// Feedback
 
 			Intent email = new Intent(Intent.ACTION_VIEW);
@@ -427,7 +434,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 			// startActivity(email);
 			break;
 
-		case 27:
+		case 28:
 			// Share Dota2TV
 			Intent sendIntent = new Intent();
 			sendIntent.setAction(Intent.ACTION_SEND);
@@ -440,7 +447,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 			// startActivity(sendIntent);
 			break;
 
-		case 28:
+		case 29:
 			// Rate Dota2TV
 			Intent rateIntent = new Intent(Intent.ACTION_VIEW);
 			// Try Google play

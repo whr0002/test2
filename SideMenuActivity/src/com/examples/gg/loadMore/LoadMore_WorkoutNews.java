@@ -63,8 +63,8 @@ public class LoadMore_WorkoutNews extends LoadMore_Base {
 
 			mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
-			final String[] catagory = { "Diet and Nutrition", "Fittness",
-					"Body and Mind", "Lifestyle", "Health Headlines" };
+			final String[] catagory = { "Health Headlines", "Fittness",
+					"Body and Mind", "Lifestyle", "Diet and Nutrition" };
 
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 					mActionBar.getThemedContext(),
@@ -98,7 +98,7 @@ public class LoadMore_WorkoutNews extends LoadMore_Base {
 		case 0:
 			// Menu option 1
 			ft.replace(R.id.content_frame, new LoadMore_WorkoutNews(
-					"http://www.ctvnews.ca/health/diet-and-nutrition",0));
+					"http://www.ctvnews.ca/health/health-headlines",0));
 			break;
 
 		case 1:
@@ -121,10 +121,10 @@ public class LoadMore_WorkoutNews extends LoadMore_Base {
 
 		case 4:
 			// Menu option 5
-			ft.replace(R.id.content_frame, new LoadMore_WorkoutNews(
-					"http://www.ctvnews.ca/health/health-headlines",4));
-			break;
 
+			ft.replace(R.id.content_frame, new LoadMore_WorkoutNews(
+					"http://www.ctvnews.ca/health/diet-and-nutrition",4));
+			break;
 		}
 
 		ft.commit();

@@ -333,10 +333,10 @@ public class LoadMore_News extends LoadMore_Base implements
 				imageView.setPadding(5, 5, 5, 5);
 				imageViews[i] = imageView;
 				if (i == 0) {
-					imageViews[i].setBackgroundResource(R.drawable.d2_selected);
+					imageViews[i].setBackgroundResource(R.drawable.selected);
 				} else {
 					imageViews[i]
-							.setBackgroundResource(R.drawable.d2_unselected);
+							.setBackgroundResource(R.drawable.unselected);
 				}
 				group.addView(imageViews[i]);
 			}
@@ -373,8 +373,8 @@ public class LoadMore_News extends LoadMore_Base implements
 
 		advPager.setCurrentItem(0);
 
-		imageViews[0].setBackgroundResource(R.drawable.d2_selected);
-		imageViews[1].setBackgroundResource(R.drawable.d2_unselected);
+		imageViews[0].setBackgroundResource(R.drawable.selected);
+		imageViews[1].setBackgroundResource(R.drawable.unselected);
 
 	}
 
@@ -409,10 +409,10 @@ public class LoadMore_News extends LoadMore_Base implements
 			curPosPager = arg0;
 			what.getAndSet(arg0);
 			for (int i = 0; i < imageViews.length; i++) {
-				imageViews[arg0].setBackgroundResource(R.drawable.d2_selected);
+				imageViews[arg0].setBackgroundResource(R.drawable.selected);
 				if (arg0 != i) {
 					imageViews[i]
-							.setBackgroundResource(R.drawable.d2_unselected);
+							.setBackgroundResource(R.drawable.unselected);
 				}
 			}
 
