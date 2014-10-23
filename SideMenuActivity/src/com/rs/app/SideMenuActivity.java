@@ -94,7 +94,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 		// Pass results to MenuListAdapter Class
 		// mMenuAdapter = new MenuListAdapter(this, title, subtitle, icon);
 		items.add(new SectionItem("Everyday's Feed"));
-		items.add(new EntryItem("What's New", "Fresh day",
+		items.add(new EntryItem("What's New", "Fresh every day",
 				R.drawable.fresh_meat));
 
 		items.add(new EntryItem("Latest News", "From CTV News",
@@ -102,7 +102,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 
 		items.add(new SectionItem("Let's do it"));
 		items.add(new EntryItem("7-minute workout", "Train efficiently",
-				R.drawable.highlights));
+				R.drawable.minutes));
 		
 		items.add(new SectionItem("Workout Videos"));
 		items.add(new EntryItem("General", null,
@@ -156,7 +156,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 //		items.add(new EntryItem("Twitch Streams", "Battle begins!",
 //				R.drawable.live));
 		items.add(new EntryItem("Favorites", "Great videos",
-				R.drawable.highlights));
+				R.drawable.medal));
 		items.add(new EntryItem("Healthy Tips", "Make your life better",
 				R.drawable.live));
 
@@ -337,7 +337,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 		case 4:
 			// 7 minute workout
 //			ft.replace(R.id.content_frame, new PlaylistFragment());
-			ft.replace(R.id.content_frame, new SearchResultFragment("7 minute workout","7-Minute Workout"));
+			ft.replace(R.id.content_frame, new SearchResultFragment("7 minutes workout","7-minute workout"));
 			break;
 
 		// Section divider case 5------------------------

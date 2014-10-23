@@ -1,10 +1,8 @@
 package com.examples.gg.loadMore;
 
 import io.vov.vitamio.utils.Log;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -21,26 +19,25 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.costum.android.widget.LoadMoreListView;
-import com.costum.android.widget.LoadMoreListView.OnLoadMoreListener;
 import com.examples.gg.adapters.EndlessScrollListener;
 import com.examples.gg.adapters.VideoArrayAdapter;
 import com.examples.gg.data.MyAsyncTask;
 import com.examples.gg.data.Video;
 import com.examples.gg.feedManagers.FeedManager_Base;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.rs.app.R;
+import com.rs.app.ToastAdListener;
 
 public class LoadMore_Base extends SherlockFragment implements
 		ActionBar.OnNavigationListener {
@@ -75,7 +72,7 @@ public class LoadMore_Base extends SherlockFragment implements
 	protected ActionBar mActionBar;
 	protected boolean firstTime = true;
 	protected int currentPosition = 0;
-//	protected AdView adView;
+	protected AdView adView;
 	protected GridView gv;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,8 +85,7 @@ public class LoadMore_Base extends SherlockFragment implements
 		fullscreenLoadingView = sfa
 				.findViewById(R.id.fullscreen_loading_indicator);
 
-		// Get ads view
-//		adView = (AdView) sfa.findViewById(R.id.ad);
+
 
 		// default no filter for videos
 		needFilter = false;
@@ -98,6 +94,9 @@ public class LoadMore_Base extends SherlockFragment implements
 
 		// set the layout
 		view = inflater.inflate(R.layout.loadmore_list, null);
+		
+
+
 
 		// Initial fragment manager
 		fm = sfa.getSupportFragmentManager();
@@ -251,7 +250,17 @@ public class LoadMore_Base extends SherlockFragment implements
 		super.onActivityCreated(savedInstanceState);
 
 		setListView();
-
+		// Get ads view
+		adView = (AdView) sfa.findViewById(R.id.ad);
+		if(adView !=null){
+//			adView.setAdListener(new ToastAdListener(sfa));
+//			adView.loadAd(new AdRequest.Builder().build());
+			AdRequest adRequest = new AdRequest.Builder()
+		    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+		    .addTestDevice("5E4CA696BEB736E734DD974DD296F11A")
+		    .build();
+			adView.loadAd(adRequest);
+		}
 	}
 
 	@Override
@@ -302,23 +311,6 @@ public class LoadMore_Base extends SherlockFragment implements
 
 		return true;
 	}
-
-//	@Override
-//	public void onListItemClick(ListView l, View v, int position, long id) {
-//
-//		// check network first
-//		// if (ic.checkConnection(this.getSherlockActivity())) {
-//		// get selected items
-//
-//		// Toast.makeText(this.getSherlockActivity(), videos.get(position),
-//		// Toast.LENGTH_SHORT).show();
-//
-//		Intent i = new Intent(this.getSherlockActivity(),
-//				YoutubeActionBarActivity.class);
-//		i.putExtra("video", videolist.get(position));
-//		startActivity(i);
-//
-//	}
 
 	class LoadMoreTask extends MyAsyncTask {
 
@@ -371,7 +363,7 @@ public class LoadMore_Base extends SherlockFragment implements
 					feedManager.setmJSON(result);
 
 					List<Video> newVideos = feedManager.getVideoPlaylist();
-					Log.d("debug", "size of list: " + newVideos.size());
+//					Log.d("debug", "size of list: " + newVideos.size());
 					// adding new loaded videos to our current video list
 					for (Video v : newVideos) {
 						// System.out.println("new id: " + v.getVideoId());
@@ -446,15 +438,25 @@ public class LoadMore_Base extends SherlockFragment implements
 	// DisplayView(mRetryView, myLoadMoreListView, fullscreenLoadingView) ;
 	// }
 	// }
+    @Override
+	public void onPause() {
+    	if(adView != null)
+    		adView.pause();
+        super.onPause();
+    }
 
+    @Override
+	public void onResume() {
+        super.onResume();
+        if(adView != null)
+        	adView.resume();
+    }
 	@Override
 	public void onDestroy() {
-		super.onDestroy();
-
 		// Destroy ads when the view is destroyed
-//		if (adView != null) {
-//			adView.destroy();
-//		}
+		if (adView != null) {
+			adView.destroy();
+		}
 		// Log.d("UniversalImageLoader", "cleared!");
 //		imageLoader.clearDiscCache();
 		imageLoader.clearMemoryCache();
@@ -462,7 +464,8 @@ public class LoadMore_Base extends SherlockFragment implements
 		// check the state of the task
 		cancelAllTask();
 		hideAllViews();
-
+		
+		super.onDestroy();
 	}
 
 	public void cancelAllTask() {

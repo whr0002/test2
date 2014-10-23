@@ -2,6 +2,7 @@ package com.examples.gg.loadMore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,6 +22,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.ShareActionProvider;
 import com.examples.gg.data.Video;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayer.OnFullscreenListener;
@@ -39,6 +42,8 @@ public class YoutubeActionBarActivity extends SherlockFragmentActivity implement
 	private boolean isFullscreenMode;
 	private Activity sfa;
 	private YouTubePlayerSupportFragment fragment;
+    private InterstitialAd mInterstitial;
+    private Random mRandom;
 //	private ActionBar mActionBar;
 	
 	private static final int LANDSCAPE_ORIENTATION = Build.VERSION.SDK_INT < 9 ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -89,8 +94,18 @@ public class YoutubeActionBarActivity extends SherlockFragmentActivity implement
 			desc.setText(video.getVideoDesc());
 
 		}
+		mRandom = new Random();
+		if(mRandom.nextInt(10)>6){
+			// Loading Ad when close a video at 30%
+	        mInterstitial = new InterstitialAd(this);
+	        mInterstitial.setAdUnitId("ca-app-pub-6718707824713684/3686309050");
+			AdRequest adRequest = new AdRequest.Builder()
+		    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+		    .addTestDevice("5E4CA696BEB736E734DD974DD296F11A")
+		    .build();
+			mInterstitial.loadAd(adRequest);
+		}
 		
-
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager
 				.beginTransaction();
@@ -276,5 +291,19 @@ public class YoutubeActionBarActivity extends SherlockFragmentActivity implement
 //		      Toast.makeText(sfa, errorMessage, Toast.LENGTH_LONG).show();
 		    }
 		  }
+		  
+			@Override
+			public void onDestroy() {
+				// Show Ads
+				if (mInterstitial != null)
+			        if (mInterstitial.isLoaded()) {
+			            mInterstitial.show();
+			        }
 
+				
+				super.onDestroy();
+
+
+
+			}
 }

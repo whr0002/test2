@@ -30,12 +30,15 @@ import com.examples.gg.adapters.VideoArrayAdapter;
 import com.examples.gg.data.MyAsyncTask;
 import com.examples.gg.data.Video;
 import com.examples.gg.feedManagers.FeedManager_Base;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.rs.app.R;
+import com.rs.app.ToastAdListener;
 
 public class LoadMore_Activity_Base extends SherlockActivity {
 	protected LoadMoreListView myLoadMoreListView;
@@ -74,7 +77,7 @@ public class LoadMore_Activity_Base extends SherlockActivity {
 	protected String thumbnailUrl;
 	protected int section = 0;
 	private DisplayImageOptions options;
-//	protected AdView adView;
+	protected AdView adView;
 	protected boolean hasHeader = true;
 	protected GridView gv;
 	protected Activity sfa;
@@ -89,7 +92,17 @@ public class LoadMore_Activity_Base extends SherlockActivity {
 		sfa = this;
 		// Get loading view
 		fullscreenLoadingView = findViewById(R.id.fullscreen_loading_indicator);
-//		adView = (AdView) findViewById(R.id.ad);
+
+		
+		adView = (AdView) sfa.findViewById(R.id.ad);
+//		adView.setAdListener(new ToastAdListener(sfa));
+//		adView.loadAd(new AdRequest.Builder().build());
+		AdRequest adRequest = new AdRequest.Builder()
+	    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+	    .addTestDevice("5E4CA696BEB736E734DD974DD296F11A")
+	    .build();
+		adView.loadAd(adRequest);
+		
 		// default no filter for videos
 
 		Intent intent = getIntent();
@@ -406,23 +419,36 @@ public class LoadMore_Activity_Base extends SherlockActivity {
 	public void Initializing() {
 
 	}
+    @Override
+	public void onPause() {
+    	if(adView != null)
+    		adView.pause();
+        super.onPause();
+    }
 
+    @Override
+	public void onResume() {
+        super.onResume();
+        if(adView != null)
+        	adView.resume();
+    }
 	@Override
 	public void onDestroy() {
-		super.onDestroy();
-
 		// Destroy ads when the view is destroyed
-//		if (adView != null) {
-//			adView.destroy();
-//		}
-
+		if (adView != null) {
+			adView.destroy();
+		}
 		// Log.d("UniversalImageLoader", "It's task root!");
-		imageLoader.clearDiscCache();
+//		imageLoader.clearDiscCache();
 		imageLoader.clearMemoryCache();
 
 		// check the state of the task
 		cancelAllTask();
 		// hideAllViews();
+		
+		super.onDestroy();
+
+
 
 	}
 
