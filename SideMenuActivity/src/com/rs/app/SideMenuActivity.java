@@ -440,7 +440,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 			sendIntent.setAction(Intent.ACTION_SEND);
 			sendIntent
 					.putExtra(Intent.EXTRA_TEXT,
-							"https://play.google.com/store/apps/details?id=");
+							"https://play.google.com/store/apps/details?id=com.rs.app");
 			sendIntent.setType("text/plain");
 			startActivity(Intent
 					.createChooser(sendIntent, "Share Workout Day to.."));
@@ -452,13 +452,13 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 			Intent rateIntent = new Intent(Intent.ACTION_VIEW);
 			// Try Google play
 			rateIntent
-					.setData(Uri.parse("market://details?id=com.examples.gg"));
+					.setData(Uri.parse("market://details?id=com.rs.app"));
 			if (tryStartActivity(rateIntent) == false) {
 				// Market (Google play) app seems not installed, let's try to
 				// open a webbrowser
 				rateIntent
 						.setData(Uri
-								.parse("https://play.google.com/store/apps/details?id="));
+								.parse("https://play.google.com/store/apps/details?id=com.rs.app"));
 				if (tryStartActivity(rateIntent) == false) {
 					// Well if this also fails, we have run out of options,
 					// inform the user.

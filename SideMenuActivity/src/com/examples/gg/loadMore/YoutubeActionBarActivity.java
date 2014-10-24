@@ -113,7 +113,7 @@ public class YoutubeActionBarActivity extends SherlockFragmentActivity implement
 		fragment = new YouTubePlayerSupportFragment();
 		fragmentTransaction.add(R.id.youtubeplayer, fragment);
 		fragmentTransaction.commit();		
-		fragment.initialize("AIzaSyAuEa3bIKbSYiXVWbHU_zueVzEBv9p2r_Y",this);
+		fragment.initialize("AIzaSyBH48QFut4US2brnmGhrUMxy95MoYenfxM",this);
 		doLayout();
 
 	}
@@ -222,7 +222,7 @@ public class YoutubeActionBarActivity extends SherlockFragmentActivity implement
 	  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    if (requestCode == RECOVERY_DIALOG_REQUEST) {
 	      // Retry initialization if user performed a recovery action
-	      getYouTubePlayerProvider().initialize("AIzaSyAuEa3bIKbSYiXVWbHU_zueVzEBv9p2r_Y", this);
+	      getYouTubePlayerProvider().initialize("AIzaSyBH48QFut4US2brnmGhrUMxy95MoYenfxM", this);
 	    }
 	  }
 
