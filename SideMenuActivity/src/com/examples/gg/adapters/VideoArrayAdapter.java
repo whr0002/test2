@@ -121,10 +121,9 @@ public class VideoArrayAdapter extends ArrayAdapter<String> {
 				.showImageOnLoading(R.drawable.imageholder3)
 				.showImageForEmptyUri(R.drawable.imageholder3)
 				.showImageOnFail(R.drawable.imageholder3).cacheInMemory(true)
-				.delayBeforeLoading(300)
-				.cacheOnDisk(true).resetViewBeforeLoading(false)
-				.considerExifParams(true).bitmapConfig(Bitmap.Config.RGB_565)
-				.build();
+				.delayBeforeLoading(300).cacheOnDisk(true)
+				.resetViewBeforeLoading(false).considerExifParams(true)
+				.bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
 
 	@Override
@@ -167,7 +166,7 @@ public class VideoArrayAdapter extends ArrayAdapter<String> {
 		if (videos.get(position).isVideo) {
 
 			// For Youtube videos, showing update date and views
-			holder.countView.setText(" | " + videos.get(position).getUpdateTime()
+			holder.countView.setText(videos.get(position).getUpdateTime()
 					+ " | " + videos.get(position).getViewCount());
 		} else if (videos.get(position).isTwitch) {
 

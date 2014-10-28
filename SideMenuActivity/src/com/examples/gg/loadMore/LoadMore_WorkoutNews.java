@@ -150,8 +150,8 @@ public class LoadMore_WorkoutNews extends LoadMore_Base {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				String url = videolist.get(position).getVideoId();
-				Intent i = new Intent(Intent.ACTION_VIEW);
-				i.setData(Uri.parse(url));
+				Intent i = new Intent(sfa,NewsViewerActivity.class);
+				i.putExtra("uri", url);
 				startActivity(i);
 			}
 		});
@@ -251,6 +251,9 @@ public class LoadMore_WorkoutNews extends LoadMore_Base {
 						newsUri = newsUriElements.first()
 								.select("a").first().attr("href");
 //						System.out.println("article uri: " +newsUri);
+						if(newsUri != null){
+							newsUri = newsUri.replaceAll("www.ctvnews.ca", "www.ctvnews.ca/mobile");
+						}
 					}
 
 					
