@@ -2,43 +2,67 @@ package com.examples.gg.loadMore;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.examples.gg.adapters.FavoriteVideoRemovedCallback;
 import com.examples.gg.adapters.VaaForFavorites;
 import com.examples.gg.data.Video;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.rs.app.R;
 
 //import com.examples.gg.twitchplayers.VideoBuffer;
 
 public class FavoritesFragment extends LoadMore_Base implements
 		FavoriteVideoRemovedCallback {
 
-	private VaaForFavorites vaaf;
-	private SharedPreferences prefs;
+	protected VaaForFavorites vaaf;
+	protected SharedPreferences prefs;
 	protected String nextFragmentAPI;
+	protected int searchType;
 
 	@Override
 	public void Initializing() {
 		abTitle = "Favorites";
 		setHasOptionsMenu(true);
-		setOptionMenu(true, false);
+		setOptionMenu(true, true);
 
 		prefs = PreferenceManager
 				.getDefaultSharedPreferences(getSherlockActivity());
 	}
 
+	public void setDropdown() {
+
+		ab.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+		final String[] catagory = { "All", "Videos", "Channels", "Playlists" , "News"};
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+				ab.getThemedContext(), R.layout.sherlock_spinner_item,
+				android.R.id.text1, catagory);
+
+		adapter.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
+
+		ab.setListNavigationCallbacks(adapter, this);
+
+		ab.setSelectedNavigationItem(currentPosition);
+
+	}
+
 	@Override
 	public void refreshFragment() {
-		titles.clear();
+//		titles.clear();
 		videolist.clear();
 		this.setListView();
 	}
@@ -54,8 +78,8 @@ public class FavoritesFragment extends LoadMore_Base implements
 				if (v.isVideo) {
 					// This is a video
 					Intent i = new Intent(sfa, YoutubeActionBarActivity.class);
-					i.putExtra("isfullscreen", true);
-					i.putExtra("videoId", videolist.get(position).getVideoId());
+//					i.putExtra("isfullscreen", true);
+					i.putExtra("video", videolist.get(position));
 					startActivity(i);
 				} else if (v.isChannel) {
 					// This is a channel
@@ -86,12 +110,15 @@ public class FavoritesFragment extends LoadMore_Base implements
 					i1.putExtra("playlistID", videolist.get(position)
 							.getVideoId());
 					startActivity(i1);
-				} else if (v.isTwitch) {
-
-				} else if (v.isNews) {
-					// This is news, open news viewer
+				} else if(v.isTwitch){
+					// Using new video player
+//					Intent i = new Intent(sfa, VideoBuffer.class);
+//					i.putExtra("video", videolist.get(position).getVideoId());
+//					startActivity(i);
+				} else if(v.isNews){
+					// Start News activity
 					String url = videolist.get(position).getVideoId();
-					Intent i = new Intent(sfa, NewsViewerActivity.class);
+					Intent i = new Intent(sfa,NewsViewerActivity.class);
 					i.putExtra("uri", url);
 					startActivity(i);
 				}
@@ -102,18 +129,18 @@ public class FavoritesFragment extends LoadMore_Base implements
 	@Override
 	public void setListView() {
 
-		vaaf = new VaaForFavorites(sfa, titles, videolist, imageLoader,
+		vaaf = new VaaForFavorites(sfa, videolist, imageLoader,
 				FavoritesFragment.this);
 		gv.setAdapter(vaaf);
 
 		// Get the favorites
-		setFavoriteVideos(titles, videolist);
+		setFavoriteVideos(videolist);
 		// Refresh adapter
 		vaaf.notifyDataSetChanged();
 		// printVideoLog(videolist);
 	}
 
-	private void setFavoriteVideos(ArrayList<String> ts, ArrayList<Video> vl) {
+	public void setFavoriteVideos(ArrayList<Video> vl) {
 		Gson gson = new Gson();
 
 		SharedPreferences favoritePrefs = sfa.getSharedPreferences("Favorites",
@@ -132,8 +159,30 @@ public class FavoritesFragment extends LoadMore_Base implements
 					listType);
 
 			for (int i = videos.size() - 1; i >= 0; i--) {
-				vl.add(videos.get(i));
-				ts.add(videos.get(i).getTitle());
+				Video v = videos.get(i);
+				if (searchType == 0) {
+					// Show all
+					vl.add(v);
+
+				} else if (searchType == 1 && v.isVideo) {
+					// only show videos
+					vl.add(v);
+
+
+				} else if (searchType == 2 && v.isChannel) {
+					// only show channels
+					vl.add(v);
+	
+				} else if (searchType == 3 && v.isPlaylist) {
+					// only show playlists
+					vl.add(v);
+			
+				} else if (searchType == 4 && v.isNews){
+					vl.add(v);
+				} else if (searchType == 5 && v.isTwitch){
+					vl.add(v);
+				}
+
 			}
 
 		}
@@ -148,7 +197,7 @@ public class FavoritesFragment extends LoadMore_Base implements
 
 	}
 
-	private void removeTheVideo(ArrayList<Video> videos, Video mVideo) {
+	protected void removeTheVideo(ArrayList<Video> videos, Video mVideo) {
 		int index = -1;
 		if (mVideo != null) {
 			for (int i = 0; i < videos.size(); i++) {
@@ -163,6 +212,33 @@ public class FavoritesFragment extends LoadMore_Base implements
 
 			}
 		}
+
+	}
+
+
+	private boolean check() {
+		PackageManager pm = sfa.getPackageManager();
+		List<PackageInfo> infoList = pm
+				.getInstalledPackages(PackageManager.GET_SERVICES);
+		for (PackageInfo info : infoList) {
+			if ("com.adobe.flashplayer".equals(info.packageName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+
+		if (firstTime) {
+			firstTime = false;
+			return true;
+		}
+
+		searchType = itemPosition;
+		refreshFragment();
+		return true;
 
 	}
 

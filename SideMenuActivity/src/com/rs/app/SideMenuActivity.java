@@ -30,10 +30,12 @@ import com.examples.gg.data.EntryItem;
 import com.examples.gg.data.Item;
 import com.examples.gg.data.SectionItem;
 import com.examples.gg.loadMore.FavoritesFragment;
+import com.examples.gg.loadMore.HistoryFragment;
 import com.examples.gg.loadMore.LoadMore_H_Subscription;
 import com.examples.gg.loadMore.LoadMore_News;
 import com.examples.gg.loadMore.LoadMore_WorkoutNews;
 import com.examples.gg.loadMore.SearchResultFragment;
+import com.examples.gg.loadMore.SubscriptionFragment;
 import com.examples.gg.loadMore.TipsFragment;
 import com.examples.gg.settings.SettingsActivity;
 import com.rs.app.R;
@@ -160,6 +162,9 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 //				R.drawable.live));
 		items.add(new EntryItem("Favorites", "Great videos",
 				R.drawable.medal));
+		items.add(new EntryItem("Subscriptions", "Local subscriptions",
+				R.drawable.upcoming));
+		items.add(new EntryItem("History", "Watched videos", R.drawable.minutes));
 		items.add(new EntryItem("Healthy Tips", "Make your life better",
 				R.drawable.live));
 
@@ -418,13 +423,18 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 		case 24:
 			ft.replace(R.id.content_frame, new FavoritesFragment());
 			break;
-			
 		case 25:
+			ft.replace(R.id.content_frame, new SubscriptionFragment());
+			break;
+		case 26:
+			ft.replace(R.id.content_frame, new HistoryFragment());
+			break;
+		case 27:
 			ft.replace(R.id.content_frame, new TipsFragment());
 			break;
 			
 		// Section divider case 25------------------------
-		case 27:
+		case 29:
 			// Feedback
 
 			Intent email = new Intent(Intent.ACTION_VIEW);
@@ -434,7 +444,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 			// startActivity(email);
 			break;
 
-		case 28:
+		case 30:
 			// Share Dota2TV
 			Intent sendIntent = new Intent();
 			sendIntent.setAction(Intent.ACTION_SEND);
@@ -447,7 +457,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 			// startActivity(sendIntent);
 			break;
 
-		case 29:
+		case 31:
 			// Rate Dota2TV
 			Intent rateIntent = new Intent(Intent.ACTION_VIEW);
 			// Try Google play

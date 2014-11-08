@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -28,7 +27,7 @@ public class MenuIconView extends ImageView implements OnClickListener{
 	protected VideoArrayAdapter.ViewHolder mViewholder;
 	protected Video mVideo;
 	
-	protected final String prefName = "Favorites";
+	protected String prefName = "Favorites";
 	
 	public MenuIconView(Context context) {
 		super(context);
@@ -132,6 +131,9 @@ public class MenuIconView extends ImageView implements OnClickListener{
 		}
 		
 		if(!isExist(videos, mVideo)){
+			if(mVideo.isTwitch){
+				mVideo.setViewCount("----");
+			}
 			videos.add(mVideo);
 			String json = gson.toJson(videos);
 			favEditor.putString("json", json);

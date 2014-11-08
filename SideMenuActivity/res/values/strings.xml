@@ -2,6 +2,20 @@
 <resources>
 
     <string name="app_name">Daily Workout Go</string>
+    <string name="package_name">com.rs.app</string>
+    <string name="email">my.dailyappgo@gmail.com</string>
+    <string name="mail">mailto:my.dailyappgo@gmail.com?subject=Daily Workout Go Feedback</string>
+    <string name="summary">Help us make Daily Workout Go better</string>
+    <string name="bannerID">ca-app-pub-6718707824713684/2349176659</string>
+    <string name="interstitialID">ca-app-pub-6718707824713684/3686309050</string>
+    <string name="apiKey">AIzaSyCXoBgIHJSAFsQZh8SFo2EimyxWXt4HXEk</string>
+    <string name="browserKey">AIzaSyAqTeUKoW3h5jF8NCfMBRQxZYsGtCU-VZg</string>
+    <string name="numOfResults">20</string>
+    <string name="messageForEmptySubs">You have no subscriptions right now. When you find a channel and add the channel in Favorites, it will automatically subscribes the channel for you.</string>
+    
+    
+    
+    
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="date">update time</string>

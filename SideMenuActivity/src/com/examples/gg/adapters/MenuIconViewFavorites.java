@@ -3,11 +3,6 @@ package com.examples.gg.adapters;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import com.examples.gg.data.Video;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.rs.app.R;
-
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,9 +13,14 @@ import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.examples.gg.data.Video;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.rs.app.R;
+
 public class MenuIconViewFavorites extends MenuIconView{
 
-	private FavoriteVideoRemovedCallback mfc;
+	public FavoriteVideoRemovedCallback mfc;
 	public MenuIconViewFavorites(Context context) {
 		super(context);
 	}
