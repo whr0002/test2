@@ -53,6 +53,9 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 
 	private FragmentManager fm;
 	private final String firstTimePrefs = "firsttime";
+	private String appName;
+	private String packageName;
+	private String mail;
 //	private InterstitialAd interstitial;
 
 	// private boolean doubleBackToExitPressedOnce = false;
@@ -75,7 +78,9 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 		// Set Ad Listener to use the callbacks below
 //		interstitial.setAdListener(this);
 
-		
+		appName = getResources().getString(R.string.app_name);
+		packageName = getResources().getString(R.string.package_name);
+		mail = getResources().getString(R.string.mail);
 		// Initial fragment manager
 		fm = this.getSupportFragmentManager();
 
@@ -439,7 +444,7 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 
 			Intent email = new Intent(Intent.ACTION_VIEW);
 			email.setData(Uri
-					.parse("mailto:workoutmaster2014@gmail.com?subject=Workout Day Feedback"));
+					.parse(mail));
 			startActivity(Intent.createChooser(email, "Send feedback via.."));
 			// startActivity(email);
 			break;
@@ -450,10 +455,10 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 			sendIntent.setAction(Intent.ACTION_SEND);
 			sendIntent
 					.putExtra(Intent.EXTRA_TEXT,
-							"https://play.google.com/store/apps/details?id=com.rs.app");
+							"https://play.google.com/store/apps/details?id=" + packageName);
 			sendIntent.setType("text/plain");
 			startActivity(Intent
-					.createChooser(sendIntent, "Share Workout Day to.."));
+					.createChooser(sendIntent, "Share "+appName+" to.."));
 			// startActivity(sendIntent);
 			break;
 
@@ -462,13 +467,13 @@ public class SideMenuActivity extends SherlockFragmentActivity {
 			Intent rateIntent = new Intent(Intent.ACTION_VIEW);
 			// Try Google play
 			rateIntent
-					.setData(Uri.parse("market://details?id=com.rs.app"));
+					.setData(Uri.parse("market://details?id="+packageName));
 			if (tryStartActivity(rateIntent) == false) {
 				// Market (Google play) app seems not installed, let's try to
 				// open a webbrowser
 				rateIntent
 						.setData(Uri
-								.parse("https://play.google.com/store/apps/details?id=com.rs.app"));
+								.parse("https://play.google.com/store/apps/details?id="+packageName));
 				if (tryStartActivity(rateIntent) == false) {
 					// Well if this also fails, we have run out of options,
 					// inform the user.
